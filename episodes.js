@@ -549,7 +549,7 @@ function getAllEpisodes() {
           "http://static.tvmaze.com/uploads/images/original_untouched/1/2628.jpg",
       },
       summary:
-        "<p></p><p>Jon is brought before Mance Rayder, the King Beyond the Wall, while the Night's Watch survivors retreat south. In King's Landing, Tyrion asks for his reward. Littlefinger offers Sansa a way out. Cersei hosts a dinner for the royal family. Daenerys sails into Slaver's Bay.</p>",
+        "<p>Jon is brought before Mance Rayder, the King Beyond the Wall, while the Night's Watch survivors retreat south. In King's Landing, Tyrion asks for his reward. Littlefinger offers Sansa a way out. Cersei hosts a dinner for the royal family. Daenerys sails into Slaver's Bay.</p>",
       _links: {
         self: {
           href: "http://api.tvmaze.com/episodes/4972",
