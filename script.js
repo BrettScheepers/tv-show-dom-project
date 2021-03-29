@@ -40,6 +40,7 @@ function addEpisode(episode) {
 }
 
 liveSearch.addEventListener('input', (e) => {
+  selectSearch.value = 'all';
   let regex = new RegExp(e.currentTarget.value, 'gi');
 
   cardContainerElem.innerHTML = '';
@@ -50,11 +51,18 @@ liveSearch.addEventListener('input', (e) => {
 })
 
 selectSearch.addEventListener('change', (e) => {
+  liveSearch.value = '';
   cardContainerElem.innerHTML = '';
-  if (e.currentTarget.value === 'all') allEpisodes.forEach( episode => addEpisode(episode));
+  if (e.currentTarget.value === 'all') {
+    allEpisodes.forEach( episode => addEpisode(episode));
+    let count = allEpisodes.length;
+    episodeDisplayCount.innerHTML = `Displaying ${count}/${allEpisodes.length} episodes`;
+  } 
   else {
     allEpisodes.filter( episode => episode.name === e.currentTarget.value)
                .forEach( episode => addEpisode(episode));
+    let count = allEpisodes.filter( episode => episode.name === e.currentTarget.value).length;
+    episodeDisplayCount.innerHTML = `Displaying ${count}/${allEpisodes.length} episodes`;
   }
 })
 
