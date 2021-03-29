@@ -11,13 +11,16 @@
 
 // window.onload = setup;
 
-const containerElem = document.querySelector('.container');
-const testShow = getOneEpisode();
-const allShows = getAllEpisodes();
-const footer = document.createElement('footer');
+// Variables
+const cardContainerElem = document.querySelector('.card-container');
+const selectSearch = document.getElementById('selectSearch');
+const liveSearch = document.getElementById('liveSearch');
+const episodeDisplayCount = document.getElementById('episodeDisplayCount');
 
-footer.innerHTML = `<p>Data came from <a href="https://www.tvmaze.com/">TVMaze.com</a></p>`
+const testEpisode = getOneEpisode();
+const allEpisodes = getAllEpisodes();
 
+// Functions
 function padZero(num) {
   if (num < 10) return `0${num}`;
   else return num;
@@ -33,8 +36,34 @@ function addEpisode(episode) {
                       <img src="${episode.image.medium}" alt="">
                       ${episode.summary}
                    `
-  containerElem.appendChild(card);
+  cardContainerElem.appendChild(card);
 }
 
-allShows.forEach( show => addEpisode(show));
-containerElem.appendChild(footer)
+liveSearch.addEventListener('input', (e) => {
+  let regex = new RegExp(e.currentTarget.value, 'gi');
+
+  cardContainerElem.innerHTML = '';
+  allEpisodes.filter( episode => regex.test(episode.name) || regex.test(episode.summary))
+             .forEach( episode => addEpisode(episode));
+  let count = allEpisodes.filter( episode => regex.test(episode.name) || regex.test(episode.summary)).length;
+  episodeDisplayCount.innerHTML = `Displaying ${count}/${allEpisodes.length} episodes`;
+})
+
+selectSearch.addEventListener('change', (e) => {
+  cardContainerElem.innerHTML = '';
+  if (e.currentTarget.value === 'all') allEpisodes.forEach( episode => addEpisode(episode));
+  else {
+    allEpisodes.filter( episode => episode.name === e.currentTarget.value)
+               .forEach( episode => addEpisode(episode));
+  }
+})
+
+// Action
+// On Load
+allEpisodes.forEach( episode => addEpisode(episode));
+allEpisodes.forEach( episode => {
+  const option = document.createElement('option');
+  option.value = `${episode.name}`;
+  option.innerText = `S${padZero(episode.season)}E${padZero(episode.number)} - ${episode.name}`;
+  selectSearch.appendChild(option);
+})
