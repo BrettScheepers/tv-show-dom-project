@@ -1,11 +1,15 @@
 // Variables
 const cardContainerElem = document.querySelector('.card-container');
+const showSearch = document.querySelector('#showSearch');
 const selectSearch = document.getElementById('selectSearch');
 const liveSearch = document.getElementById('liveSearch');
 const episodeDisplayCount = document.getElementById('episodeDisplayCount');
 
 // Get all episodes
-let allEpisodes = null;
+let allEpisodes = getAllEpisodes();
+let allShows = getAllShows().sort((a, b) => a.name.localeCompare(b.name));
+
+console.log(allShows)
 
 // Functions
 //Displays episode number with padded zeros
@@ -26,6 +30,44 @@ function addEpisode(episode) {
                       ${episode.summary}
                    `
   cardContainerElem.appendChild(card);
+}
+
+//Function to add every show to showSearch
+function addShowsToShowList() {
+  allShows.forEach( show => {
+    const option = document.createElement('option');
+    option.value = `${show.name}`;
+    option.innerText = `${show.name}`;
+    showSearch.appendChild(option);
+  })
+}
+
+//Function that displays every episode
+function displayAllEpisodes(allEpisodes) {
+  cardContainerElem.innerHTML = '';
+  allEpisodes.forEach( episode => addEpisode(episode));
+  selectSearch.innerHTML = `<option value="all">All</option>`;
+  allEpisodes.forEach( episode => {
+    const option = document.createElement('option');
+    option.value = `${episode.name}`;
+    option.innerText = `S${padZero(episode.season)}E${padZero(episode.number)} - ${episode.name}`;
+    selectSearch.appendChild(option);
+  })
+  let count = allEpisodes.length;
+  episodeDisplayCount.innerHTML = `Displaying ${count}/${allEpisodes.length} episodes`;
+}
+
+//Fetch Function
+function fetchEpisodes(id) {
+  //Fetch
+  fetch(`https://api.tvmaze.com/shows/${id}/episodes`)
+    .then(response => response.json())
+    .then(data => {
+      console.log('made an api call')
+      allEpisodes = data;
+      displayAllEpisodes(allEpisodes);
+    })
+    .catch(error => console.log(error))
 }
 
 //Live Search event listener
@@ -57,25 +99,13 @@ selectSearch.addEventListener('change', (e) => {
   }
 })
 
-//Function that displays every episode
-function displayAllEpisodes(allEpisodes) {
-  allEpisodes.forEach( episode => addEpisode(episode));
-  allEpisodes.forEach( episode => {
-    const option = document.createElement('option');
-    option.value = `${episode.name}`;
-    option.innerText = `S${padZero(episode.season)}E${padZero(episode.number)} - ${episode.name}`;
-    selectSearch.appendChild(option);
-  })
-  let count = allEpisodes.length;
-  episodeDisplayCount.innerHTML = `Displaying ${count}/${allEpisodes.length} episodes`;
-}
+//EventListener that displays episode list when showSearch has input
+showSearch.addEventListener('change', (e) => {
+  let selectedShow = allShows.filter(show => show.name === e.currentTarget.value);
+  let selectedShowId = selectedShow[0].id;
 
-//Fetch
-fetch('https://api.tvmaze.com/shows/82/episodes')
-  .then(response => response.json())
-  .then(data => {
-    console.log('made an api call')
-    allEpisodes = data;
-    displayAllEpisodes(allEpisodes);
-  })
-  .catch(error => console.log(error))
+  fetchEpisodes(selectedShowId);
+})
+
+addShowsToShowList();
+displayAllEpisodes(allEpisodes);
