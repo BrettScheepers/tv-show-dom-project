@@ -1470,7 +1470,7 @@ function getAllEpisodes() {
           "http://static.tvmaze.com/uploads/images/original_untouched/61/153044.jpg",
       },
       summary:
-        "<p>Jaime encounters a hero; the High Sparrow fixates on another prey; Arya hatches a new plan; Yara and Theon plot their next move; Olenna and Cersei discuss their families' futures.</p><p></p><p>While Jaime weighs his options, Cersei answers a request. Tyrion's plans bear fruit. Arya faces a new test.</p>",
+        "<p>Jaime encounters a hero; the High Sparrow fixates on another prey; Arya hatches a new plan; Yara and Theon plot their next move; Olenna and Cersei discuss their families' futures. While Jaime weighs his options, Cersei answers a request. Tyrion's plans bear fruit. Arya faces a new test.</p>",
       _links: {
         self: {
           href: "http://api.tvmaze.com/episodes/729573",
