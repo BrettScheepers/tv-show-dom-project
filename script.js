@@ -4,12 +4,14 @@ const showSearch = document.querySelector('#showSearch');
 const selectSearch = document.getElementById('selectSearch');
 const liveSearch = document.getElementById('liveSearch');
 const episodeDisplayCount = document.getElementById('episodeDisplayCount');
+const filteringDiv = document.getElementById('filtering-text')
+const showLiveSearch = document.getElementById('showLiveSearch')
+const showDisplayCount = document.getElementById('showDisplayCount')
 
 // Get all episodes
 let allEpisodes = getAllEpisodes();
 let allShows = getAllShows().sort((a, b) => a.name.localeCompare(b.name));
-
-console.log(allShows)
+let oneShow = getOneShow();
 
 // Functions
 //Displays episode number with padded zeros
@@ -32,14 +34,49 @@ function addEpisode(episode) {
   cardContainerElem.appendChild(card);
 }
 
+// Creates an show card and appends it to the card container
+function addShow(show) {
+  const showCard = document.createElement('div');
+  showCard.classList.add('show-card');
+  showCard.innerHTML = `
+                        <div class="show-name-div">
+                          <h1>${show.name}</h1>
+                        </div>
+                        <img src="${show.image.medium}" alt="">
+                        <div class="summary-div">
+                          ${show.summary}
+                        </div>
+                        <div class="show-info-div">
+                          <ul>
+                            <li><strong>Rated</strong>: ${show.rating.average}</li>
+                            <li><strong>Genres</strong>: ${show.genres.join(' | ')}</li>
+                            <li><strong>Status</strong>: ${show.status}</li>
+                            <li><strong>Runtime</strong>: ${show.runtime}</li>
+                          </ul>
+                        </div>
+                   `
+  cardContainerElem.appendChild(showCard);
+}
+
+//Function to display all shows
+function displayAllShows() {
+  cardContainerElem.innerHTML = '';
+  allShows.forEach(show => addShow(show));
+  let showListLength = allShows.length;
+  console.log(showListLength)
+  showDisplayCount.textContent = `Found ${showListLength} shows`;
+}
+
 //Function to add every show to showSearch
-function addShowsToShowList() {
-  allShows.forEach( show => {
+function addShowsToShowList(showList) {
+  showSearch.innerHTML = `<option value="all">All Shows</option>`
+  showList.forEach( show => {
     const option = document.createElement('option');
     option.value = `${show.name}`;
     option.innerText = `${show.name}`;
     showSearch.appendChild(option);
   })
+  console.log(showList);
 }
 
 //Function that displays every episode
@@ -99,13 +136,47 @@ selectSearch.addEventListener('change', (e) => {
   }
 })
 
-//EventListener that displays episode list when showSearch has input
-showSearch.addEventListener('change', (e) => {
-  let selectedShow = allShows.filter(show => show.name === e.currentTarget.value);
-  let selectedShowId = selectedShow[0].id;
+//Live Search event listener for shows
+showLiveSearch.addEventListener('input', (e) => {
+  let regex = new RegExp(e.currentTarget.value, 'gi');
+  console.log(regex)
 
-  fetchEpisodes(selectedShowId);
+  cardContainerElem.innerHTML = '';
+  let filteredShows = allShows.filter( show => regex.test(show.name) || regex.test(show.summary));
+  filteredShows.forEach( show => addShow(show));
+  console.log(filteredShows)
+  let count = filteredShows.length;
+  showDisplayCount.innerHTML = `Found ${count} shows`;
+  addShowsToShowList(filteredShows);
 })
 
-addShowsToShowList();
-displayAllEpisodes(allEpisodes);
+//EventListener that displays episode list when showSearch has input
+showSearch.addEventListener('change', (e) => {
+  if (e.currentTarget.value == 'all') {
+    selectSearch.classList.add('on-show-hide')
+    liveSearch.classList.add('on-show-hide')
+    episodeDisplayCount.classList.add('on-show-hide')
+
+    filteringDiv.classList.remove('on-episode-hide')
+    showLiveSearch.classList.remove('on-episode-hide')
+    showDisplayCount.classList.remove('on-episode-hide')
+
+    displayAllShows(allShows)
+  } else {
+    selectSearch.classList.remove('on-show-hide')
+    liveSearch.classList.remove('on-show-hide')
+    episodeDisplayCount.classList.remove('on-show-hide')
+
+    filteringDiv.classList.add('on-episode-hide')
+    showLiveSearch.classList.add('on-episode-hide')
+    showDisplayCount.classList.add('on-episode-hide')
+
+    let selectedShow = allShows.filter(show => show.name === e.currentTarget.value);
+    let selectedShowId = selectedShow[0].id;
+
+    fetchEpisodes(selectedShowId);
+  }
+})
+
+addShowsToShowList(allShows);
+displayAllShows(allShows);

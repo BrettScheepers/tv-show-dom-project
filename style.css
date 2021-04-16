@@ -6,6 +6,7 @@
   --grey1: #1a1a1a;
   --grey2: #292929;
   --grey3: #333333;
+  --white-shadow: rgba(255,255,255,0.1);
 }
 
 * {
@@ -25,7 +26,7 @@ body {
 
 body {
   font-family: Roboto;
-  background-color: var(--white);
+  background-color: var(--black);
   color: var(--white);
 }
 
@@ -45,13 +46,17 @@ body {
 /* Input Section */
 .input-section {
   grid-column: 1/4;
-  background-color: var(--grey3);
-  box-shadow: 2px 2px 10px var(--black),
-              -2px 0px 10px var(--black);
+  background-color: var(--grey1);
+  box-shadow: -1px -1px 1px var(--white-shadow),
+              1px 1px 1px 1px black;
   font-size: 0.8rem;
   padding: 1rem;
   display: flex;
   flex-wrap: wrap;
+}
+
+.input-section *{
+  margin: 0.5rem 0;
 }
 
 .input {
@@ -60,7 +65,8 @@ body {
   margin-right: 1rem;
 }
 
-#episodeDisplayCount {
+.div-text {
+  margin-right: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -75,10 +81,11 @@ body {
 }
 
 .card {
-  background-color: var(--grey3);
+  background-color: var(--grey1);
   text-align: center;
-  box-shadow: 2px 2px 10px var(--black),
-              -2px 0px 10px var(--black);
+  box-shadow: -1px -1px 1px 0.8px var(--white-shadow),
+              1px 1px 1px 1px black;
+  border-radius: 5px;
 }
 
 .card .name-div {
@@ -106,6 +113,67 @@ body {
   font-size: 0.8rem;
 }
 
+/* Show Cards */
+.show-card {
+  grid-column: 1/4;
+  background-color: var(--grey1);
+  text-align: center;
+  box-shadow: -1px -1px 1px 0.8px var(--white-shadow),
+              1px 1px 1px 1px black;
+  border-radius: 5px;
+
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1.3fr;
+  gap: 1rem;
+}
+
+/* .show-card:hover {
+  box-shadow: inset -2px -2px 1px var(--white-shadow),
+              inset 4px 4px 1px var(--black);
+} */
+
+.show-name-div {
+  display: block;
+  grid-column: 1/4;
+  margin: 1rem;
+  font-size: 3rem;
+  display: flex;
+  align-items: flex-start;
+}
+
+.show-card img {
+  display: block;
+  margin: 1rem;
+  border-radius: 5px;
+}
+
+.summary-div {
+  margin: 1rem;
+}
+
+.show-info-div {
+  background-color: var(--grey2);
+  box-shadow: -1px -1px 1px 0.8px var(--white-shadow),
+              1px 1px 1px black;
+  border-radius: 5px;            
+  margin: 1rem;
+}
+
+.show-info-div ul{
+  list-style-type: none;
+  padding-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-around;
+}
+
+.show-info-div ul li{
+  margin: 1rem 0;
+  display: flex;
+  align-items: flex-start;
+}
+
 /* Footer */
 footer {
   color: var(--grey3);
@@ -114,5 +182,21 @@ footer {
 
 footer a {
   text-decoration: none;
-  color: var(--black);
+  color: var(--white);
+}
+
+/* Hide Styling */
+.on-show-hide {
+  display: none;
+}
+
+.on-episode-hide {
+  display: none;
+}
+
+/* Breakpoint */
+@media only screen and (max-width: 1000px) {
+  .show-card *{
+    grid-column: 1/4;
+  }
 }
