@@ -549,7 +549,7 @@ function getAllEpisodes() {
           "http://static.tvmaze.com/uploads/images/original_untouched/1/2628.jpg",
       },
       summary:
-        "<p></p><p>Jon is brought before Mance Rayder, the King Beyond the Wall, while the Night's Watch survivors retreat south. In King's Landing, Tyrion asks for his reward. Littlefinger offers Sansa a way out. Cersei hosts a dinner for the royal family. Daenerys sails into Slaver's Bay.</p>",
+        "<p>Jon is brought before Mance Rayder, the King Beyond the Wall, while the Night's Watch survivors retreat south. In King's Landing, Tyrion asks for his reward. Littlefinger offers Sansa a way out. Cersei hosts a dinner for the royal family. Daenerys sails into Slaver's Bay.</p>",
       _links: {
         self: {
           href: "http://api.tvmaze.com/episodes/4972",
@@ -1470,7 +1470,7 @@ function getAllEpisodes() {
           "http://static.tvmaze.com/uploads/images/original_untouched/61/153044.jpg",
       },
       summary:
-        "<p>Jaime encounters a hero; the High Sparrow fixates on another prey; Arya hatches a new plan; Yara and Theon plot their next move; Olenna and Cersei discuss their families' futures.</p><p></p><p>While Jaime weighs his options, Cersei answers a request. Tyrion's plans bear fruit. Arya faces a new test.</p>",
+        "<p>Jaime encounters a hero; the High Sparrow fixates on another prey; Arya hatches a new plan; Yara and Theon plot their next move; Olenna and Cersei discuss their families' futures. While Jaime weighs his options, Cersei answers a request. Tyrion's plans bear fruit. Arya faces a new test.</p>",
       _links: {
         self: {
           href: "http://api.tvmaze.com/episodes/729573",
