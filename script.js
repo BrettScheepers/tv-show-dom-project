@@ -34,6 +34,12 @@ function addEpisode(episode) {
   cardContainerElem.appendChild(card);
 }
 
+//Function to check image
+function checkForImage(showImage) {
+  if (showImage === null) return ''
+  else return showImage;
+}
+
 // Creates an show card and appends it to the card container
 function addShow(show) {
   const showCard = document.createElement('div');
@@ -41,8 +47,8 @@ function addShow(show) {
   showCard.innerHTML = `
                         <div class="show-name-div">
                           <h1>${show.name}</h1>
-                        </div>
-                        <img src="${show.image.medium}" alt="">
+                        </div>         
+                        <img src="${checkForImage(show.image.medium)}" alt=""></img>
                         <div class="summary-div">
                           ${show.summary}
                         </div>
@@ -144,7 +150,6 @@ showLiveSearch.addEventListener('input', (e) => {
   cardContainerElem.innerHTML = '';
   let filteredShows = allShows.filter( show => regex.test(show.name) || regex.test(show.summary));
   filteredShows.forEach( show => addShow(show));
-  console.log(filteredShows)
   let count = filteredShows.length;
   showDisplayCount.innerHTML = `Found ${count} shows`;
   addShowsToShowList(filteredShows);
