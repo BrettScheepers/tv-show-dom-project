@@ -44,6 +44,7 @@ function checkForImage(showImage) {
 function addShow(show) {
   const showCard = document.createElement('div');
   showCard.classList.add('show-card');
+  showCard.setAttribute("id", `${show.name}`)
   showCard.innerHTML = `
                         <div class="show-name-div">
                           <h1>${show.name}</h1>
@@ -61,6 +62,21 @@ function addShow(show) {
                           </ul>
                         </div>
                    `
+  showCard.addEventListener('click', (e) => {
+    selectSearch.classList.remove('on-show-hide')
+    liveSearch.classList.remove('on-show-hide')
+    episodeDisplayCount.classList.remove('on-show-hide')
+
+    filteringDiv.classList.add('on-episode-hide')
+    showLiveSearch.classList.add('on-episode-hide')
+    showDisplayCount.classList.add('on-episode-hide')
+
+    let selectedShow = allShows.filter(show => show.name === e.currentTarget.id);
+    let selectedShowId = selectedShow[0].id;
+
+    fetchEpisodes(selectedShowId);
+    showSearch.value = e.currentTarget.id
+  })
   cardContainerElem.appendChild(showCard);
 }
 

@@ -76,7 +76,7 @@ body {
 /* Episode Cards */
 .card-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   grid-gap: 3rem;
 }
 
@@ -198,5 +198,33 @@ footer a {
 @media only screen and (max-width: 1000px) {
   .show-card *{
     grid-column: 1/4;
+  }
+}
+
+@media only screen and (max-width: 769px) {
+  .container {
+    font-size: 0.8rem;
+  }
+  .input-section {
+    font-size: 0.5rem;
+  }
+}
+
+@media only screen and (max-width: 476px) {
+  /* .main {
+    padding: 0;
+  } */
+  .card-container {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+  .show-card {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+  .container {
+    font-size: 0.8rem;
+    width: 100%;
+  }
+  .input-section {
+    font-size: 0.2rem;
   }
 }
